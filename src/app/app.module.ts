@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddTokenInterceptor } from './Interceptor/add-token.interceptor';
-import { TokenService } from './auth/services';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,7 +28,6 @@ import { TokenService } from './auth/services';
       useClass: AddTokenInterceptor,
       multi: true,
     },
-    TokenService,
   ],
   bootstrap: [AppComponent],
 })

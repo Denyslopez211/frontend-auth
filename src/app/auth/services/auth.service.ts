@@ -28,7 +28,7 @@ export class AuthService {
   private setAuthentication(user: User, token: string): boolean {
     this._currentUser.set(user);
     this._authStatus.set(AuthStatus.authenticated);
-    this.tokenService.setToken(token);
+    localStorage.setItem('dys-c', token);
 
     return true;
   }
@@ -36,13 +36,9 @@ export class AuthService {
   login(email: string, password: string): Observable<boolean> {
     const url = `${this.baseUrl}/auth/login`;
     const body = { email, password };
-    return this.http.post<LoginResponse>(url, body).pipe(
-      map(({ user, token }) => this.setAuthentication(user, token)),
-      catchError((err) => {
-        console.log('error');
-        return throwError(() => err.error.message);
-      })
-    );
+    return this.http
+      .post<LoginResponse>(url, body)
+      .pipe(map(({ user, token }) => this.setAuthentication(user, token)));
   }
 
   checkAuthStatus(): Observable<boolean> {
@@ -57,7 +53,7 @@ export class AuthService {
   }
 
   logout() {
-    this.tokenService.removeToken();
+    localStorage.clear();
     this._currentUser.set(null);
     this._authStatus.set(AuthStatus.notAuthenticated);
   }

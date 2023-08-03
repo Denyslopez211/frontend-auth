@@ -8,30 +8,43 @@ import {
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { TokenService } from '../auth/services';
 
 @Injectable()
 export class AddTokenInterceptor implements HttpInterceptor {
   private router = inject(Router);
-  private tokenService = inject(TokenService);
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = this.tokenService.getToken();
+    const token = localStorage.getItem('dys-c');
 
     if (token) {
       request = request.clone({
-        setHeaders: { Authorization: `Bearer ${token}` },
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache',
+          Pragma: 'no-cache',
+        },
       });
     }
     return next.handle(request).pipe(
       catchError((err: HttpErrorResponse) => {
-        if (err.status === 401) {
-          this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/login');
+        if (err.status === 0) {
+          return throwError(
+            () => 'The server is not available or cannot be accessed'
+          );
         }
-        return throwError(() => err.error.message);
+
+        if (err.status === 401) {
+          return throwError(() => 'Error loading attempt histories');
+        }
+        if (err.error.message) {
+          return throwError(() => err.error.message);
+        }
+
+        return throwError(() => err.message);
       })
     );
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { DashboardService } from '../services/dashboard.service';
 import { ResponseHistory } from '../interfaces';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -9,6 +10,7 @@ import { ResponseHistory } from '../interfaces';
 })
 export class DashboardPageComponent implements OnInit {
   private dashboardService = inject(DashboardService);
+  private modal = inject(ToastrService);
   public histories: ResponseHistory[] = [];
 
   ngOnInit(): void {
@@ -16,8 +18,11 @@ export class DashboardPageComponent implements OnInit {
   }
 
   getHistories() {
-    this.dashboardService.getHistories().subscribe((data) => {
-      this.histories = data;
+    this.dashboardService.getHistories().subscribe({
+      next: (data) => (this.histories = data),
+      error: (message) => {
+        this.modal.error('Error', message);
+      },
     });
   }
 }

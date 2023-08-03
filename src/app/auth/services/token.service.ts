@@ -1,14 +1,10 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TokenService {
   private token: string | null = null;
-
-  private _currentToken = signal<string | null>(null);
-
-  public currentToken = computed(() => this._currentToken());
 
   setToken(token: string) {
     this.token = token;
