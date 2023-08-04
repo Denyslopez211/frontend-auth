@@ -1,10 +1,10 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
-import { Observable, catchError, map, of, throwError } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 
 import { TokenService } from './token.service';
-import { CheckTokenResponse, LoginResponse, User } from '../interfaces';
+import { CheckToken, LoginResponse, User } from '../interfaces';
 import { AuthStatus } from '../enums';
 
 @Injectable({
@@ -13,7 +13,7 @@ import { AuthStatus } from '../enums';
 export class AuthService {
   private readonly baseUrl: string = environment.baseUrl;
   private http = inject(HttpClient);
-  private tokenService = inject(TokenService);
+  // private tokenService = inject(TokenService);
 
   private _currentUser = signal<User | null>(null);
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
@@ -43,7 +43,7 @@ export class AuthService {
 
   checkAuthStatus(): Observable<boolean> {
     const url = `${this.baseUrl}/auth/check-token`;
-    return this.http.get<CheckTokenResponse>(url).pipe(
+    return this.http.get<CheckToken>(url).pipe(
       map(({ user, token }) => this.setAuthentication(user, token)),
       catchError(() => {
         this._authStatus.set(AuthStatus.notAuthenticated);

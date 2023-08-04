@@ -6,12 +6,12 @@ import {
   HttpInterceptor,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
-import { Router } from '@angular/router';
+import { Observable, catchError } from 'rxjs';
+import { ErrorService } from './error.service';
 
 @Injectable()
 export class AddTokenInterceptor implements HttpInterceptor {
-  private router = inject(Router);
+  private readonly errorService = inject(ErrorService);
 
   intercept(
     request: HttpRequest<unknown>,
@@ -28,24 +28,12 @@ export class AddTokenInterceptor implements HttpInterceptor {
         },
       });
     }
-    return next.handle(request).pipe(
-      catchError((err: HttpErrorResponse) => {
-        this.router.navigateByUrl('/login');
-        if (err.status === 0) {
-          return throwError(
-            () => 'The server is not available or cannot be accessed'
-          );
-        }
-
-        if (err.status === 401) {
-          return throwError(() => 'Error loading attempt histories');
-        }
-        if (err.error.message) {
-          return throwError(() => err.error.message);
-        }
-
-        return throwError(() => err.message);
-      })
-    );
+    return next
+      .handle(request)
+      .pipe(
+        catchError((err: HttpErrorResponse) =>
+          this.errorService.messageError(err)
+        )
+      );
   }
 }

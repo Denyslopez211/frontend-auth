@@ -1,7 +1,8 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, OnInit, computed, effect, inject } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AuthService } from './auth/services/auth.service';
 import { AuthStatus } from './auth/enums';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
