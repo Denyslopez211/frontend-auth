@@ -1,0 +1,29 @@
+
+.table-container {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+}
+
+table {
+  width: 100%;
+}
+
+.table-container {
+  overflow-y: auto;
+  height: 500px;
+}
+
+.mat-table {
+  table-layout: fixed;
+}
+
+.mat-header-row {
+  position: sticky;
+  top: 0;
+  background-color: #673ab7 !important;
+  color: white;
+  z-index: 1;
+  font-size: 1rem;
+}

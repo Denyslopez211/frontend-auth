@@ -1,20 +1,32 @@
-<div class="limiter">
-  <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-    <div class="container-login100-form-btn">
-      <div class="wrap-login100-form-btn">
-        <div class="login100-form-bgbtn"></div>
-        <button class="login100-form-btn" (click)="onLogout()">Logout</button>
+<p>
+  <mat-toolbar color="primary">
+    <span>App Chek DenysL</span>
+    <span class="example-spacer"></span>
+    <section>
+      <div class="example-button-row">
+        <button mat-raised-button color="accent" (click)="onLogout()">
+          Logout
+        </button>
       </div>
-    </div>
-    <h1>Dashboard</h1>
-    <hr />
+    </section>
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="icon-button with logout icon"
+      (click)="onLogout()"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
 
-    <h3>User</h3>
-    <pre>{{ user() | json }}</pre>
-
-    <br />
-    <hr />
-    <router-outlet />
-    <hr />
-  </div>
-</div>
+<mat-card class="user-card">
+  <mat-card-header>
+    <mat-card-title>Histories de intentos</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p><strong>Nombre:</strong> {{ user()?.username }}</p>
+    <p><strong>Email:</strong> {{ user()?.email }}</p>
+  </mat-card-content>
+</mat-card>
+<router-outlet />

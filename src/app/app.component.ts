@@ -7,6 +7,7 @@ import { AuthStatus } from './auth/enums';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   private authService = inject(AuthService);

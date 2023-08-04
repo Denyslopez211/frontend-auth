@@ -1,9 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+
 import { DashboardService } from '../services/dashboard.service';
-import { ResponseHistory } from '../interfaces';
-// import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
+import { HistoryUser } from '../interfaces/history-user.interface';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,11 +12,18 @@ import { AuthService } from '../../auth/services/auth.service';
 })
 export class DashboardPageComponent implements OnInit {
   private dashboardService = inject(DashboardService);
-  // private modal = inject(ToastrService);
-  private router = inject(Router);
+  private modal = inject(ToastrService);
   private authService = inject(AuthService);
 
-  public histories: ResponseHistory[] = [];
+  public histories: HistoryUser[] = [];
+
+  public displayedColumns: string[] = [
+    'username',
+    'isActive',
+    'description',
+    'date',
+    'tried',
+  ];
 
   ngOnInit(): void {
     this.getHistories();
@@ -26,7 +33,7 @@ export class DashboardPageComponent implements OnInit {
     this.dashboardService.getHistories().subscribe({
       next: (data) => (this.histories = data),
       error: (message) => {
-        // this.modal.error('Error', message);
+        this.modal.error('Error', message);
         this.authService.logout();
       },
     });

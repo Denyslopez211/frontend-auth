@@ -1,5 +1,42 @@
-<h1>Histories</h1>
-<br />
+<div class="table-container">
+  <table mat-table [dataSource]="histories" class="mat-elevation-z8">
+    <!-- Username Column -->
+    <ng-container matColumnDef="username">
+      <th class="mat-header-row" mat-header-cell *matHeaderCellDef>Username</th>
+      <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+    </ng-container>
 
-<pre>{{ histories | json }}</pre>
-<br />
+    <!-- Status Column -->
+    <ng-container matColumnDef="isActive">
+      <th class="mat-header-row" mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.isActive ? "Enable" : "Disabled" }}
+      </td>
+    </ng-container>
+
+    <!-- Type tried Column -->
+    <ng-container matColumnDef="description">
+      <th class="mat-header-row" mat-header-cell *matHeaderCellDef>
+        Type tried
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th class="mat-header-row" mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.date | date : "dd/MM/yyyy" }}
+      </td>
+    </ng-container>
+
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="tried">
+      <th class="mat-header-row" mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let element">{{ element.tried }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
