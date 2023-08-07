@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environments';
 import { Observable, catchError, map, of } from 'rxjs';
 
-import { TokenService } from './token.service';
 import { CheckToken, LoginResponse, User } from '../interfaces';
 import { AuthStatus } from '../enums';
 
@@ -13,7 +12,6 @@ import { AuthStatus } from '../enums';
 export class AuthService {
   private readonly baseUrl: string = environment.baseUrl;
   private http = inject(HttpClient);
-  // private tokenService = inject(TokenService);
 
   private _currentUser = signal<User | null>(null);
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
@@ -28,7 +26,7 @@ export class AuthService {
   private setAuthentication(user: User, token: string): boolean {
     this._currentUser.set(user);
     this._authStatus.set(AuthStatus.authenticated);
-    localStorage.setItem('dys-c', token);
+    localStorage.setItem('t-dn', token);
 
     return true;
   }
