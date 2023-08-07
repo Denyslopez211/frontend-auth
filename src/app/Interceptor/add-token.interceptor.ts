@@ -24,6 +24,15 @@ export class AddTokenInterceptor implements HttpInterceptor {
         setHeaders: {
           Authorization: `Bearer ${token}`,
           'Cache-Control': 'no-cache',
+          'Access-Control-Allow-Origin': '*',
+          Pragma: 'no-cache',
+        },
+      });
+    } else {
+      request = request.clone({
+        setHeaders: {
+          'Cache-Control': 'no-cache',
+          'Access-Control-Allow-Origin': '*',
           Pragma: 'no-cache',
         },
       });
