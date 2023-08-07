@@ -1,3 +1,3 @@
 export const environment = {
-  baseUrl: 'http://ec2-52-14-212-203.us-east-2.compute.amazonaws.com:3001/api',
+  baseUrl: 'https://aur9zvxnci.execute-api.us-east-2.amazonaws.com/api',
 };
