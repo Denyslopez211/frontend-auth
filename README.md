@@ -15,7 +15,7 @@ Open [https://main.d1tdzrqq2m2s24.amplifyapp.com](https://main.d1tdzrqq2m2s24.am
 ## test User
 
 ```
-user: denyslope@gimail.com
+email: denyslopez21@gmail.com
 password: Febrero.19
 ```
 
