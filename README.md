@@ -12,13 +12,6 @@ App proccess model
 
 Open [https://main.d1tdzrqq2m2s24.amplifyapp.com](https://main.d1tdzrqq2m2s24.amplifyapp.com).
 
-## test User
-
-```
-email: denyslopez21@gmail.com
-password: Febrero.19
-```
-
 ## Execute local
 
 1. Clone repository
